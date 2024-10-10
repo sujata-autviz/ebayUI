@@ -1,0 +1,77 @@
+/* login.component.css */
+.login-container {
+    display: flex;                /* Use flexbox for centering */
+    justify-content: center;      /* Center horizontally */
+    align-items: center;          /* Center vertically */
+    height: 100vh;                /* Full height of the viewport */
+  }
+  
+  form {
+    background-color: #f9f9f9;    /* Light background for the form */
+    padding: 20px;                /* Add some padding */
+    border-radius: 8px;          /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 377px;                 /* Set a fixed width for the form */
+  }
+  
+  div {
+    margin-bottom: 15px;          /* Space between form fields */
+  }
+  
+  .password-container {
+    position: relative;           /* Position relative for the icon */
+  }
+  
+  .input-wrapper {
+    position: relative;           /* Position relative for the icon and input */
+  }
+  
+  .input-icon {
+    position: absolute;           /* Position icon inside input */
+    left: 10px;                  /* Position to the left */
+    top: 50%;                    /* Center vertically */
+    transform: translateY(-50%); /* Center vertically */
+    font-size: 1.2em;            /* Icon size */
+    color: #ccc;                 /* Icon color */
+  }
+  
+  input {
+    width: 100%;                  /* Full width inputs */
+    padding: 10px 40px 10px 30px; /* Add padding for the icon space */
+    border: 1px solid #ccc;      /* Border styling */
+    border-radius: 4px;          /* Rounded corners for inputs */
+  }
+  
+  .show-pass {
+    position: absolute;           /* Position the eye icon */
+    right: 10px;                 /* Align to the right */
+    top: 50%;                    /* Center vertically */
+    transform: translateY(-50%); /* Center vertically */
+    cursor: pointer;             /* Pointer cursor on hover */
+  }
+  
+  button {
+    background-color: #007bff;   /* Bootstrap primary color */
+    color: white;                 /* Text color */
+    border: none;                 /* Remove border */
+    padding: 10px 15px;          /* Button padding */
+    border-radius: 4px;          /* Rounded corners for button */
+    cursor: pointer;              /* Pointer cursor */
+  }
+  
+  button:disabled {
+    background-color: #ccc;      /* Disabled button styling */
+    cursor: not-allowed;          /* Not-allowed cursor for disabled button */
+  }
+  
+  /* login.component.css */
+.success-message {
+    color: green;               /* Green text for success */
+    margin-top: 10px;          /* Space above the message */
+  }
+  
+  .error-message {
+    color: red;                /* Red text for error */
+    margin-top: 10px;          /* Space above the message */
+  }
+  

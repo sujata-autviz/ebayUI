@@ -1,0 +1,32 @@
+<!-- login.component.html -->
+<div class="login-container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="username">Username</label>
+        <div class="input-wrapper">
+       <i class="fal fa-user position-absolute input-icon"></i>
+        <input type="text" id="username" formControlName="username" appEmojiValidation />
+        </div>
+      </div>
+      <div class="password-container">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <i class="fal fa-lock position-absolute input-icon"></i>
+          <input
+            type="{{ showPassword ? 'text' : 'password' }}"
+            id="password"
+            formControlName="password"
+            appEmojiValidation
+          />
+          <span
+            class="show-pass"
+            (click)="showPwd()"
+            [ngClass]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"
+          ></span>
+        </div>
+      </div>
+      <button type="submit" [disabled]="loginForm.invalid">Login</button>
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    </form>
+  </div>
+  

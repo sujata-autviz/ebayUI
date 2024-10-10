@@ -1,0 +1,23 @@
+<div [class.collapsed]="isCollapsed" class="sidebar">
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      {{ isCollapsed ? 'Expand' : 'Collapse' }}
+    </button>
+    <ul class="menu-items">
+      <li *ngFor="let item of menuItems" 
+          (click)="toggleSidebarOnMobileView()"
+          [class.active]="item.isActive" 
+          [class.has-children]="item.children">
+        <a [routerLink]="item.route">
+          <img *ngIf="item.img" class="nav-icon" [src]="item.img" alt="{{ item.label }}">
+          <span *ngIf="!isCollapsed">{{ item.label }}</span>
+        </a>
+        <!-- Submenu for child items -->
+        <ul *ngIf="item.children && !isCollapsed" class="submenu">
+          <li *ngFor="let child of item.children" [class.active]="child.isActive">
+            <a [routerLink]="child.route">{{ child.label }}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  

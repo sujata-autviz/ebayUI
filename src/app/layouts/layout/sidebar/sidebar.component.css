@@ -1,0 +1,100 @@
+.sidebar {
+    width: 250px;
+    transition: width 0.3s ease;
+  }
+  
+  .sidebar.collapsed {
+    width: 60px;
+  }
+  
+  .menu-items li.active {
+    background-color: #d7dce0;
+    color: white;
+  }
+  
+  .menu-items li a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .menu-items .submenu {
+    padding-left: 20px;
+  }
+  
+  .sidebar.collapsed .submenu {
+    display: none;
+  }
+  
+  app-side-menu .side-menu {
+    background-color: #333; /* Your intended color */
+  }
+  .side-menu {
+    background-color: #333; /* Your intended color */
+  }
+  .menu-items.a {
+    color: #eff1f5;
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .menu-items a {
+      font-size: 1rem; /* Adjust font size for mobile */
+    }
+  
+    .toggle-btn {
+      font-size: 1rem; /* Adjust button size for mobile */
+    }
+  }
+  .menu-items {
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+  }
+  
+  .menu-items li {
+    position: relative; /* For positioning of submenus */
+  }
+  
+  .menu-items a {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    padding: 15px; /* Add padding for clickable area */
+    text-decoration: none; /* Remove underline */
+    color: white; /* Text color for links */
+    font-size: 1.2rem; /* Increase font size */
+    transition: background-color 0.3s; /* Smooth background color change on hover */
+  }
+  
+  .menu-items a:hover {
+    background-color: #575757; /* Background color on hover */
+  }
+  
+  .nav-icon {
+    margin-right: 10px; /* Spacing between icon and text */
+  }
+  
+  .submenu {
+    padding-left: 20px; /* Indent submenu items */
+  }
+  
+  .submenu a {
+    font-size: 1rem; /* Adjust font size for submenu items */
+    color: #ddd; /* Color for submenu items */
+  }
+  
+  .submenu a:hover {
+    background-color: #666; /* Hover color for submenu items */
+  }
+  
+  .active {
+    background-color: #444; /* Background color for active item */
+  }
+  
+  .toggle-btn {
+    background-color: transparent; /* Button background */
+    color: white; /* Button text color */
+    border: none; /* Remove border */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin: 15px; /* Margin around button */
+    font-size: 1.2rem; /* Button font size */
+  }
