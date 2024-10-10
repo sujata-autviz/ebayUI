@@ -47,4 +47,8 @@ export class LoginComponent implements OnInit {
   get f() {
     return this.loginForm.controls;
   }
+  resetPassword() {
+    // Redirect to the reset password page
+    this._route.navigate(['/account/reset-password']); // Adjust the route as necessary
+  }
 }

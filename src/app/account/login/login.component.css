@@ -74,4 +74,6 @@
     color: red;                /* Red text for error */
     margin-top: 10px;          /* Space above the message */
   }
-  
+  .reset-password-link{
+cursor: pointer;
+  }

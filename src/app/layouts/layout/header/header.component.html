@@ -3,7 +3,19 @@
       <h2>Ebay</h2>
     </div>
     <div class="header-right">
-      <button (click)="logout()">Logout</button>
+      <div class="dropdown" style="position: relative;">
+        <button class="dropdown-toggle" (click)="toggleDropdown()">
+          Actions <i class="fal fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-menu" *ngIf="isDropdownOpen">
+          <a class="dropdown-item" href="javascript:;" (click)="resetPassword()">
+            <i class="fas fa-lock me-2"></i> Reset Password
+          </a>
+          <a class="dropdown-item" href="javascript:;" (click)="logout()">
+            <i class="fas fa-sign-out-alt me-2"></i> Logout
+          </a>
+        </div>
+      </div>
     </div>
   </header>
   

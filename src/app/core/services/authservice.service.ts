@@ -12,12 +12,22 @@ import { isPlatformBrowser } from '@angular/common';
 export class AuthserviceService {
   apiUrl = environment.apiUrl
   tokenKey = 'token';
+  public currentUser: Observable<User>;
   private currentUserSubject: BehaviorSubject<any>; // Holds the current user data
 
   constructor(private http: HttpClient , private _router : Router , @Inject(PLATFORM_ID) private platformId: Object) {
     this.currentUserSubject = new BehaviorSubject<any>(this.getCurrentUser());
+    this.currentUser = this.currentUserSubject.asObservable();
   }
-
+  private getHttpOptions() {
+    const token = this.getToken(); // Get the latest token
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : '' // Include the token if it exists
+      }),
+    };
+  }
   login(username: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, { username, password }).pipe(
       tap((response: { token: string; user: any; }) => {
@@ -68,4 +78,17 @@ export class AuthserviceService {
   get currentUser$(): Observable<any> {
     return this.currentUserSubject.asObservable();
   }
+
+  resetPassword(old_password: string, new_password: string) {
+    const header = this.getHttpOptions();
+    return this.http.post<any>(`${this.apiUrl}/change-password`, {old_password,new_password},header).pipe(
+      tap((response: { token: string; user: any; }) => {
+        this.currentUserSubject.next(response.user); 
+      })
+    );
+
+    
+} 
+
+
 }
