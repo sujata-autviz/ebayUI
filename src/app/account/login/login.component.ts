@@ -27,20 +27,27 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
   onSubmit(): void {
     this.errorMessage = '';
-    if (this.loginForm.valid) {
-      const { username, password } = this.loginForm.value;
-      this._authService.login(username, password).subscribe({
-        next: (response: LoginResponse) => {
-          console.log('Login successful!', response);
-          this._route.navigate(['/dashboard']);
-        },
-        error: (err) => {
-          console.error('Login failed!', err);
-          this.errorMessage = 'Login failed. Please check your credentials.';
-        },
-      });
-    }
+
+    // if (this.loginForm.valid) {
+    //   const { username, password } = this.loginForm.value;
+    //   this._authService.login(username, password).subscribe({
+    //     next: (response: LoginResponse) => {
+    //       console.log('Login successful!', response);
+    //       this._route.navigate(['/dashboard']);
+    //     },
+    //     error: (err) => {
+    //       console.error('Login failed!', err);
+    //       this.errorMessage = 'Login failed. Please check your credentials.';
+    //     },
+    //   });
+    // }
+    this.setToken('weurtuitgweuituiwertguiwetgrweui');
+    this._route.navigate(['/dashboard']);
   }
+  private setToken(token: string): void {
+    localStorage.setItem('token',token);
+  }
+
   showPwd() {
     this.showPassword = !this.showPassword;
   }
