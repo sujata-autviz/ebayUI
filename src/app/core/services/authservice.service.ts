@@ -1,5 +1,5 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from '../../interfaces/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -19,14 +19,15 @@ export class AuthserviceService {
   constructor(
     private http: HttpClient,
     private _router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: Object, // Inject platform type (browser/server)
     private cookieService: CookieService
   ) {
     this.currentUserSubject = new BehaviorSubject<any>(this.getCurrentUser());
     this.currentUser = this.currentUserSubject.asObservable();
   }
+
   private getHttpOptions() {
-    const token = this.getCookie(this.tokenKey); // Get the latest token
+    const token = this.getCookie(this.tokenKey); // Get the latest token from cookies
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -34,6 +35,7 @@ export class AuthserviceService {
       }),
     };
   }
+
   login(username: string, password: string): Observable<any> {
     return this.http
       .post<any>(`${this.apiUrl}/login`, { username, password })
@@ -46,13 +48,14 @@ export class AuthserviceService {
   }
 
   logout(): void {
-    this.clearTokenCookie();
+    this.clearToken();
     this.currentUserSubject.next(null);
     this._router.navigate(['/account/login']);
   }
 
   getCurrentUser() {
-    if (typeof window !== 'undefined') {
+    // Check if running in the browser
+    if (isPlatformBrowser(this.platformId)) {
       const user = localStorage.getItem('loginUser');
       return user ? JSON.parse(user) : null;
     }
@@ -60,33 +63,35 @@ export class AuthserviceService {
   }
 
   private setToken(token: string): void {
-    this.setCookie(this.tokenKey, token, 7);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('ebay-auth-token', token); // Save token to localStorage
+    }
+    this.setCookie(this.tokenKey, token, 7); // Save token to cookies as well
   }
 
-
-  private clearTokenCookie(): void {
-    this.deleteCookie('authToken');
+  private clearToken(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('ebay-auth-token'); // Remove from localStorage
+    }
+    this.deleteCookie(this.tokenKey); // Remove from cookies
   }
+
   isLoggedIn(): boolean {
-    const token = this.getCookie('authToken');
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem('ebay-auth-token');
+      return token !== null && token.trim() !== '';
+    }
+    const token = this.getCookie(this.tokenKey); // Check token from cookies on server-side
     return token !== null && token.trim() !== '';
   }
 
-  private removeToken(): void {
-    localStorage.removeItem(this.tokenKey);
-  }
-
-  get currentUser$(): Observable<any> {
-    return this.currentUserSubject.asObservable();
-  }
-
-  resetPassword(old_password: string, new_password: string) {
-    const header = this.getHttpOptions();
+  resetPassword(old_password: string, new_password: string): Observable<any> {
+    const headers = this.getHttpOptions();
     return this.http
       .post<any>(
         `${this.apiUrl}/change-password`,
         { old_password, new_password },
-        header
+        headers
       )
       .pipe(
         tap((response: { token: string; user: any }) => {
@@ -94,27 +99,29 @@ export class AuthserviceService {
         })
       );
   }
+
   setCookie(name: string, value: string, days: number): void {
-    let expires = '';
-    if (days) {
-      const date = new Date();
-      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-      expires = '; expires=' + date.toUTCString();
+    // Only run in browser environments
+    if (isPlatformBrowser(this.platformId)) {
+      let expires = '';
+      if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        expires = '; expires=' + date.toUTCString();
+      }
+      document.cookie = name + '=' + (value || '') + expires + '; path=/';
     }
-    document.cookie = name + '=' + (value || '') + expires + '; path=/';
   }
 
   getCookie(name: string): string | null {
-    // Check if the platform is browser
+    // Only run in browser environments
     if (isPlatformBrowser(this.platformId)) {
       const match = document.cookie.match(
         new RegExp('(^| )' + name + '=([^;]+)')
       );
-      if (match) {
-        return match[2];
-      }
+      return match ? match[2] : null;
     }
-    return null; // Return null if not running in the browser
+    return null;
   }
 
   deleteCookie(name: string): void {

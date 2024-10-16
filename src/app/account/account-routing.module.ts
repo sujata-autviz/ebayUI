@@ -7,7 +7,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { loginGuard } from '../core/guards/login.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent ,   canActivate: [loginGuard]},
+  { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },

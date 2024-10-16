@@ -4,14 +4,13 @@ import { inject } from '@angular/core';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthserviceService);  
-  const islogedIn = authService.isLoggedIn()
-  const router = inject(Router);   
-  if (islogedIn) {
-    console.log('-------- auth ---', false)
-    return true; 
+  const isLoggedIn = authService.isLoggedIn();
+  const router = inject(Router);
+
+  if (isLoggedIn) {
+    return true; // Allow access to protected route
   } else {
-    console.log('-------- auth ---', false)
-    router.navigate(['/account/login']);
-    return false;  // Deny access
+    router.navigate(['/account/login']); // Redirect to login
+    return false; // Deny access
   }
 };

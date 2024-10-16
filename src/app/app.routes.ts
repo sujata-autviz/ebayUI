@@ -4,6 +4,7 @@ import { LoginComponent } from './account/login/login.component';
 import { DashboardComponent } from './pages/pages/dashboard/dashboard.component';
 import { authGuard } from './core/guards/auth.guard';
 import { LayoutComponent } from './layouts/layout.component';
+import { loginGuard } from './core/guards/login.guard';
 
 
 export const routes: Routes = [
@@ -16,7 +17,7 @@ export const routes: Routes = [
     component: LayoutComponent,
     loadChildren: () => import('./pages/pages/pages.module').then(m => m.PagesModule)
   },
-    { path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule) ,}
+    { path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule), canActivate: [loginGuard] }
 ];
 
 @NgModule({
