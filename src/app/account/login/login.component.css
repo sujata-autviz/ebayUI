@@ -1,16 +1,17 @@
-/* login.component.css */
+ /* login.component.css */
 .login-container {
     display: flex;                /* Use flexbox for centering */
     justify-content: center;      /* Center horizontally */
     align-items: center;          /* Center vertically */
-    height: 100vh;                /* Full height of the viewport */
+    height: 100vh;  
+    background: #FAFAFA;              /* Full height of the viewport */
   }
   
   form {
-    background-color: #f9f9f9;    /* Light background for the form */
-    padding: 20px;                /* Add some padding */
+    background-color: #fff;    /* Light background for the form */
+    padding: 30px;                /* Add some padding */
     border-radius: 8px;          /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; /* Subtle shadow */
     width: 377px;                 /* Set a fixed width for the form */
   }
   
@@ -53,7 +54,8 @@
   button {
     background-color: #007bff;   /* Bootstrap primary color */
     color: white;                 /* Text color */
-    border: none;                 /* Remove border */
+    border: none;
+    width: 100%;                 /* Remove border */
     padding: 10px 15px;          /* Button padding */
     border-radius: 4px;          /* Rounded corners for button */
     cursor: pointer;              /* Pointer cursor */
@@ -77,3 +79,7 @@
   .reset-password-link{
 cursor: pointer;
   }
+  .login-container label {
+    color: #000;
+    font-weight: 500;
+}

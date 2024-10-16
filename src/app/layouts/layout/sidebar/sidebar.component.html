@@ -1,6 +1,6 @@
 <div [class.collapsed]="isCollapsed" class="sidebar">
     <button class="toggle-btn" (click)="toggleSidebar()">
-      {{ isCollapsed ? 'Expand' : 'Collapse' }}
+ <i class="fas fa-bars"></i>
     </button>
     <ul class="menu-items">
       <li *ngFor="let item of menuItems" 

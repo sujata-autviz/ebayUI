@@ -13,16 +13,16 @@
   
   .dropdown-toggle {
     padding: 10px; /* Padding around the button */
-    background-color: #007bff; /* Button color */
-    color: white; /* Text color */
+    color:black; /* Text color */
     border: none; /* Remove default border */
     border-radius: 4px; /* Rounded corners */
     cursor: pointer; /* Pointer cursor on hover */
+    background: transparent;
   }
   
   .dropdown-menu {
     position: absolute; /* Positioning for dropdown */
-    top: 100%; /* Position it below the button */
+    top: 115%; /* Position it below the button */
     right: 0; /* Align it to the right */
     background-color: white; /* Background color of dropdown */
     border: 1px solid #ccc; /* Border color */
@@ -31,6 +31,7 @@
     z-index: 1000; /* Ensure dropdown is on top */
     display: flex; /* Flexbox for layout */
     flex-direction: column; /* Vertical layout */
+    left: -210%;
   }
   
   .dropdown-item {
@@ -48,5 +49,12 @@
   .fal.fa-chevron-down {
     font-size: 14px;
     color: #828282; /* Chevron color */
+    display: none; 
   }
-  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:10px;
+    background: #007bff0d;
+}
