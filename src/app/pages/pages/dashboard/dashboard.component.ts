@@ -5,14 +5,17 @@ import { RouterOutlet } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import {
+  FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { finalize, takeUntil } from 'rxjs';
 import { BaseDestroyCompoent } from '../../../shared/utils/baseDestroy';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,14 +37,14 @@ export class DashboardComponent extends BaseDestroyCompoent implements OnInit {
   updateErrorMessages: string[] = [];
   keywordForm: FormGroup;
   saving = false;
+  previousKeyword : string ='';
   dashboardService: DashboardService = inject(DashboardService);
-  constructor() {
+  constructor(private fb: FormBuilder, private _notificationService : NotificationService) {
     super();
-    this.keywordForm = new FormGroup({
-      keyword: new FormControl(''),
+    this.keywordForm = this.fb.group({
+      keyword: ['', [Validators.required, Validators.minLength(1)]], // Ensure the keyword control is required
     });
   }
-
   override ngOnInit(): void {
     this.getKeywords();
   }
@@ -89,6 +92,7 @@ export class DashboardComponent extends BaseDestroyCompoent implements OnInit {
           this.keywordForm.reset();
           this.createErrorMessage = '';
           this.saving = false;
+          this._notificationService.successToast('Keyword created successfully');
         },
         (error) => {
           this.saving = false;
@@ -97,9 +101,16 @@ export class DashboardComponent extends BaseDestroyCompoent implements OnInit {
       );
     }
   }
+  clearCreateError(): void {
+    this.createErrorMessage = ''; // Clear create error message on input
+}
 
+clearUpdateError(index: number): void {
+    this.updateErrorMessages[index] = ''; // Clear specific update error message on input
+}
   editKeyword(index: number): void {
     this.keywordsList[index].editing = true;
+    this.previousKeyword=this.keywordsList[index].keywords
   }
 
   updateKeyword(index: number): void {
@@ -107,7 +118,7 @@ export class DashboardComponent extends BaseDestroyCompoent implements OnInit {
     const newKeywordValue = this.keywordsList[index].keywords;
     if ( newKeywordValue && newKeywordValue.trim() && this.keywordsList && this.keywordsList.length>0) {
       const keywordExists = this.keywordsList.some(
-        (keyword) => keyword.keywords.toLowerCase() === newKeywordValue.toLowerCase()
+        (keyword) => keyword.keywords.toLowerCase() === newKeywordValue.toLowerCase() && keyword.id != keywordId
       );
   
       if (keywordExists) {
@@ -126,6 +137,7 @@ export class DashboardComponent extends BaseDestroyCompoent implements OnInit {
             console.log('Keyword updated:', response);
             this.keywordsList[index].editing = false;
             this.updateErrorMessages[index] = '';
+            this._notificationService.successToast('Keyword updated successfully');
           },
           (error) => {
             console.error('Error updating keyword:', error);
@@ -138,21 +150,31 @@ export class DashboardComponent extends BaseDestroyCompoent implements OnInit {
   deleteKeyword(index: number): void {
     const keywordId = this.keywordsList[index].id;
     if (keywordId !== undefined) {
-      this.dashboardService.deleteKeyword(keywordId).pipe((takeUntil(this.destroy$), finalize(()=>{
-          
-        }))).subscribe(
-        (response) => {
-          console.log('Keyword deleted:', response);
-          this.keywordsList.splice(index, 1);
-        },
-        (error) => {
-          console.error('Error deleting keyword:', error);
+      this._notificationService.confirmDelete( this.keywordsList[index].keywords).then((result) => {
+        if (result.isConfirmed) {
+          this.dashboardService.deleteKeyword(keywordId).pipe((takeUntil(this.destroy$), finalize(()=>{         
+          }))).subscribe(
+          (response) => {
+            console.log('Keyword deleted:', response);
+            this.keywordsList.splice(index, 1);
+            this._notificationService.successToast('Deleted successfully');
+          },
+          (error) => {
+            console.error('Error deleting keyword:', error);
+          }
+        );
+        } else {
+          console.log('Delete action was cancelled');
         }
-      );
+      });
+     
     }
   }
 
   cancelEdit(index: number): void {
-    this.keywordsList[index].editing = false; // Cancel editing
+    this.keywordsList[index].editing = false;
+    this.updateErrorMessages[index]  = '';
+    this.keywordsList[index].keywords = this.previousKeyword ;
+     // Cancel editing
   }
 }

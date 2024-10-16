@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AuthserviceService } from '../../../core/services/authservice.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { NotificationService } from '../../../core/services/notification.service';
 
 
 @Component({
@@ -13,21 +14,23 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent {
 authService : AuthserviceService = inject(AuthserviceService)
-constructor(private _route : Router){
+constructor(private _route : Router,
+  private _notificatonService : NotificationService
+){
 
 }
 logout(){
 this.authService.logout();
+this._notificatonService.successToast('Logged out successfully');
 }
-isDropdownOpen = false; // Control dropdown visibility
+isDropdownOpen = false; 
 
 toggleDropdown() {
   this.isDropdownOpen = !this.isDropdownOpen;
 }
 
 resetPassword() {
-  // Redirect to the reset password page
-  this._route.navigate(['/account/reset-password']); // Adjust the route as necessary
+  this._route.navigate(['/account/reset-password']); 
 }
 
 

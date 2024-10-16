@@ -1,8 +1,8 @@
 <div class="keyword-container">
   <h3 class="keyword-title">Keywords List</h3>
   <form [formGroup]="keywordForm" (ngSubmit)="addKeyword()" class="keyword-form">
-    <input type="text" formControlName="keyword" placeholder="Enter a new keyword" class="keyword-input" />
-    <button type="submit" class="keyword-button" [disabled]="saving">Add Keyword</button>
+    <input type="text" formControlName="keyword" placeholder="Enter a new keyword" class="keyword-input"  (input)="clearCreateError()" />
+    <button type="submit" class="keyword-button"  [disabled]="saving || !keywordForm.get('keyword')?.value.trim()">Add Keyword</button>
   </form>
   <div *ngIf="createErrorMessage" class="error-message">
     {{ createErrorMessage }}
@@ -17,7 +17,7 @@
 
       <ng-template #editTemplate>
         <input type="text" [(ngModel)]="keyword.keywords" class="edit-input" />
-        <button (click)="updateKeyword(i)"  [disabled]="saving" class="update-button">Update</button>
+        <button (click)="updateKeyword(i)"     [disabled]="saving || !keyword.keywords.trim()" class="update-button">Update</button>
         <button (click)="cancelEdit(i)" class="cancel-button">Cancel</button>
       </ng-template>
       <div *ngIf="updateErrorMessages[i]" class="error-message">

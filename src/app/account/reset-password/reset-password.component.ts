@@ -6,6 +6,7 @@ import { error } from 'console';
 import { BaseDestroyCompoent } from '../../shared/utils/baseDestroy';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -23,7 +24,8 @@ export class ResetPasswordComponent extends BaseDestroyCompoent{
 
   constructor(private fb: FormBuilder ,
     private _authService: AuthserviceService,
-    private _router : Router) {
+    private _router : Router,
+    private _notificationService : NotificationService) {
     super();
     this.resetPasswordForm = this.fb.group({
       old_password: ['', Validators.required],
@@ -49,6 +51,7 @@ export class ResetPasswordComponent extends BaseDestroyCompoent{
       this.successMessage = 'Password reset successfully!';
       this.errorMessage = null;
       this.resetPasswordForm.reset();
+      this._notificationService.successToast('Password reset successfully');
       this._router.navigate(['/dashboard']);
      },error=>{})
      this.successMessage = null;

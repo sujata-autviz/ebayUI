@@ -1,10 +1,13 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { AuthserviceService } from '../services/authservice.service';
+import { inject } from '@angular/core';
 
 export const authInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
-  
+  const authService = inject(AuthserviceService);
+  const authToken = authService.getCookie('authToken')
   const clonedRequest = req.clone({
     setHeaders: {
-      Authorization: `Bearer ${getToken()}`, // Replace with your token retrieval logic
+      Authorization: `Bearer ${authToken}`, // Replace with your token retrieval logic
     },
   });
 
@@ -12,10 +15,6 @@ export const authInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(clonedRequest);
 };
 
-// Function to get the token from local storage or other storage
-const getToken = (): string => {
-  return localStorage.getItem('token') || '';
-};
 
   
 

@@ -5,6 +5,7 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule, provideHttpClient, wit
 import { AccountModule } from './account/account.module';
 import { CommonModule } from '@angular/common';
 import { LayoutsModule } from './layouts/layouts.module';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Component({
@@ -24,6 +25,7 @@ import { LayoutsModule } from './layouts/layouts.module';
       useValue: authInterceptorInterceptor,
       multi: true,
     },
+    CookieService
     // HttpClient
   ],
  

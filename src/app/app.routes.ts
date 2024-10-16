@@ -16,8 +16,7 @@ export const routes: Routes = [
     component: LayoutComponent,
     loadChildren: () => import('./pages/pages/pages.module').then(m => m.PagesModule)
   },
-    { path: 'dashboard', component: DashboardComponent , canActivate: [authGuard] },
-    { path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule) }
+    { path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule) ,}
 ];
 
 @NgModule({

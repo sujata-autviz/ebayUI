@@ -29,7 +29,7 @@ export class SidebarComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         console.log('NavigationEnd event:', event);
-        this.handleNavigationEvent(event);
+       // this.handleNavigationEvent(event);
       }
       this.router.events.pipe(
         filter(event => event instanceof NavigationEnd)
