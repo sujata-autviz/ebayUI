@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
         next: (response: LoginResponse) => {
           console.log('Login successful!', response);
           this._notificationService.successToast('Login successfullly');
-          this._route.navigate(['/dashboard']);
+          this._route.navigate(['/pages/dashboard']);
         },
         error: (err) => {
           console.error('Login failed!', err);

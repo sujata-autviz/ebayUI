@@ -1,0 +1,121 @@
+<div class="container">
+  <div class="card p-2 border-0 shadow-lg">
+    <div class="d-flex align-items-center justify-content-between mb-2">
+      <h3>Questions</h3>
+      <button class="btn btn-primary" (click)="resetAddQuestionForm()">
+        Add
+      </button>
+    </div>
+    <div>
+      <p-table
+        [value]="questionList"
+        [paginator]="true"
+        [rows]="5"
+        [rowsPerPageOptions]="customPageOptions"
+        [tableStyle]="{ 'min-width': '40rem' }"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 40%">Question</th>
+            <th style="width: 30%">Answer</th>
+            <th style="width: 30%">Action</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-question>
+          <tr>
+            <td>{{ question.question }}</td>
+            <td>{{ question.answer }}</td>
+            <td>
+              <button
+                class="btn-sm btn-primary me-2"
+                (click)="editQuestion(question)"
+              >
+                Edit
+              </button>
+              <button
+                class="btn-sm btn-danger"
+                (click)="deleteQuestion(question)"
+              >
+                Remove
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  header="{{ question['id'].value ? 'Edit' : 'Add' }} Question"
+  [modal]="true"
+  [(visible)]="openModal"
+  [style]="{ width: '50rem' }"
+  [focusOnShow]="false"
+>
+  <form [formGroup]="addQuestionForm" (ngSubmit)="addQuestion()">
+    <div class="row">
+      <div class="col-12">
+        <label for="question" class="font-semibold w-100">Question</label>
+        <input
+          pInputText
+          id="question"
+          class="w-100"
+          formControlName="question"
+          [ngClass]="{
+            'is-invalid':
+              question['question'].touched && question['question'].invalid
+          }"
+          autocomplete="off"
+          autofocus="off"
+        />
+        <div
+          *ngIf="question['question'].invalid && question['question'].touched"
+          class="invalid-feedback"
+        >
+          <div *ngIf="question['question'].errors">
+            <div *ngIf="question['question'].errors['required']">
+              Question is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 mt-2">
+        <label for="answer" class="font-semibold w-100">Answer</label>
+        <input
+          pInputText
+          id="answer"
+          class="w-100"
+          autocomplete="off"
+          autofocus="off"
+          formControlName="answer"
+          [ngClass]="{
+            'is-invalid':
+              question['answer'].touched && question['answer'].invalid
+          }"
+        />
+        <div
+          *ngIf="question['answer'].invalid && question['answer'].touched"
+          class="invalid-feedback"
+        >
+          <div *ngIf="question['answer'].errors">
+            <div *ngIf="question['answer'].errors['required']">
+              Answer is required.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end gap-2 mt-3">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="openModal = !openModal"
+      >
+        Close
+      </button>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+  </form>
+</p-dialog>

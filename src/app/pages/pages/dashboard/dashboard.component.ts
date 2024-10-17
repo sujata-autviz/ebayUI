@@ -70,7 +70,7 @@ export class DashboardComponent extends BaseDestroyCompoent implements OnInit {
     this.saving = true;
     this.createErrorMessage = '';
     const newKeywordValue = this.keywordForm.get('keyword')?.value;
-    if ( newKeywordValue && newKeywordValue.trim() && this.keywordsList && this.keywordsList.length>0) {
+    if (newKeywordValue && newKeywordValue.trim()) {
       const keywordExists = this.keywordsList.some(
         (keyword) => keyword.keywords.toLowerCase() === newKeywordValue.toLowerCase()
       );

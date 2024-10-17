@@ -10,13 +10,13 @@ export class DashboardService {
   apiUrl = `${environment.apiUrl}/keywords`;
   constructor(private http : HttpClient) { }
 
-   createKeyword(keyword: string): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(this.apiUrl, { keywords: keyword }, { headers });
-  }
+  headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    createKeyword(keyword: string): Observable<any> {
+      return this.http.post<any>(this.apiUrl, { keywords: keyword }, { headers: this.headers });
+    }
 
     getAllKeywords(): Observable<any> {
-      return this.http.get<any>(this.apiUrl);
+      return this.http.get<any>(this.apiUrl, { headers: this.headers });
     }
   
 

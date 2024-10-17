@@ -1,0 +1,6 @@
+::ng-deep .p-disabled{
+    background-color: #f2eef2;
+}
+::ng-deep .p-datatable ul, ol{
+    padding-left: 0px!important;
+}

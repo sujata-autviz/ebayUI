@@ -7,6 +7,7 @@ export interface MenuItem {
     children?: MenuItem[];   // Optional array of child menu items
     isActive?: boolean;      // Indicates if the menu item is active
     isCollapsed?: boolean;   // Indicates if the menu item is collapsed
-    parentId?: number;       // ID of the parent menu item (if any)
+    parentId?: number;
+    icon?: string;      // ID of the parent menu item (if any)
   }
   

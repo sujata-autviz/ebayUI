@@ -8,8 +8,9 @@
           [class.active]="item.isActive" 
           [class.has-children]="item.children">
         <a [routerLink]="item.route">
-          <img *ngIf="item.img" class="nav-icon" [src]="item.img" alt="{{ item.label }}">
-          <span *ngIf="!isCollapsed">{{ item.label }}</span>
+          <!-- <img *ngIf="item.img" class="nav-icon" [src]="item.img" alt="{{ item.label }}"> -->
+           <i *ngIf="item.icon" [class]="item.icon"></i>
+          <span class="ms-2" *ngIf="!isCollapsed">{{ item.label }}</span>
         </a>
         <!-- Submenu for child items -->
         <ul *ngIf="item.children && !isCollapsed" class="submenu">

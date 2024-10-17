@@ -98,3 +98,6 @@
     margin: 15px; /* Margin around button */
     font-size: 1.2rem; /* Button font size */
   }
+  .menu-items i {
+    font-size: 1.2rem;
+  }

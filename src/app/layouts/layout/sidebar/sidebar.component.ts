@@ -51,15 +51,23 @@ export class SidebarComponent implements OnInit {
   getMenuItems(): MenuItem[] {
     return [
       {
-        label: 'Dashboard',
-        route: '/dashboard',
+        label: 'Keywords',
+        route: '/pages/dashboard',
         permissionName: '',
         img: '',
         id: 0,
-        isActive: false
+        isActive: false,
+        icon: "fal fa-key"
       },
-     
-      
+      {
+        label: 'Questions',
+        route: '/pages/questions',
+        permissionName: '',
+        img: '',
+        id: 1,
+        isActive: false,
+        icon: "fal fa-question-circle"
+      }
     ];
   }
   updateActiveMenuItem() {

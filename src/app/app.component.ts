@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { LayoutsModule } from './layouts/layouts.module';
 import { CookieService } from 'ngx-cookie-service';
 
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -16,7 +15,7 @@ import { CookieService } from 'ngx-cookie-service';
     AccountModule,
     CommonModule,
     HttpClientModule,
-    LayoutsModule
+    LayoutsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA] ,
   providers: [

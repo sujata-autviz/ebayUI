@@ -97,7 +97,7 @@
   .delete-button:hover,
   .update-button:hover,
   .cancel-button:hover {
-    opacity: 0.8; /* Add a hover effect for buttons */
+    opacity: 0.8; 
   }
   
   .edit-input {
@@ -108,8 +108,8 @@
     width: 209%;
   }
   .error-message {
-    color: red;  /* Change color to indicate error */
-    font-size: 0.875em;  /* Make the font smaller */
-    margin-top: 0.5em;  /* Add some space above the error message */
+    color: red; 
+    font-size: 0.875em;
+    margin-top: 0.5em;
   }
   :disabled {background-color: rgb(73, 73, 77)}
